@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VolunteerSyncApplication<volunteersync>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.daniel4k.volunteersync.volunteersync.VolunteerSyncApplication",
+            "projectName": "volunteersync",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
