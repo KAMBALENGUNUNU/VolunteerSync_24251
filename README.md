@@ -229,16 +229,15 @@ public class Location {
 ###**DIAGRAMS**
 
 ##🏗️ **Complete System Architecture Diagram**
-![Complete System Architecture Diagram](assets\CompleteSystemArchitectureDiagram.png)
+![Complete System Architecture Diagram](assets/CompleteSystemArchitectureDiagram.png)
 
 ##🗃️ **Database Entity Relationship Diagram**
 ![Database Entity Relationship Diagram](assets/ERD.png)
 
 ##🔄 **Data Flow Sequence Diagram**
 ![Data Flow Sequence Diagram](assets/DataFlowSequenceDiagram.png)
-
 ##🔐 **Security Architecture Diagram**
-![Security Architecture Diagram]( assets/SecurityArchitectureDiagram.png)
+![Security Architecture Diagram](assets/SecurityArchitectureDiagram.png)
 
 ##📊 **Service Dependency Diagram**
 ![Service Dependency Diagram](assets/ServiceDependencyDiagram.png)
