@@ -236,7 +236,7 @@ public class Location {
 ![Data Flow Sequence Diagram]()
 
 ##🔐 Security Architecture Diagram
-![]()
+![Security Architecture Diagram]()
 
 ##📊 Service Dependency Diagram
 ![]()
