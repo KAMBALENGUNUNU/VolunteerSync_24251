@@ -227,3 +227,6 @@ public class Location {
 }
 ```
 ##🏗️ Technical Architecture
+
+##🔄 Data Flow Sequence Diagram
+
