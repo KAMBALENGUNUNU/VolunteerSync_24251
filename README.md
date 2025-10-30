@@ -226,8 +226,8 @@ public class Location {
     // One Location (District) has many child Locations (Sectors), etc.
 }
 ```
-##🏗️ Technical Architecture
-![]()
+##🏗️ Complete System Architecture Diagram
+![Complete System Architecture Diagram]()
 
 ##🗃️ Database Entity Relationship Diagram
 ![Database Entity Relationship Diagram](assets/CompleteSystemArchitectureDiagram.png)
