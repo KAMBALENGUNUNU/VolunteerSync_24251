@@ -232,6 +232,10 @@ public class Location {
 
 ![Complete System Architecture Diagram](assets/CompleteSystemArchitectureDiagram.png)
 
+This diagram provides a comprehensive overview of your VolunteerSync backend's layered architecture, showcasing the structural organization and component relationships. The system follows a clean separation of concerns with six distinct layers: Config, Controller, Model, Repository, Service, and Util. The Config Layer handles security configuration and data initialization through `DataInitializer` which seeds your database with hierarchical location data and default users. The Controller Layer exposes RESTful endpoints for each domain entity, with `AuthController` managing JWT-based authentication. The Model Layer defines your JPA entities and enumerations, establishing the core data structure with proper relationships and constraints. The Repository Layer provides data access abstraction through Spring Data JPA interfaces, while the Service Layer encapsulates business logic and validation rules. Critical security components like JwtAuthenticationFilter` intercept every request to validate tokens, and `SecurityConfig` establishes stateless, role-based security policies. The diagram clearly illustrates how dependencies flow downward from controllers to services to repositories, maintaining proper architectural boundaries.
+
+
+
 ## 🗃️**Database Entity Relationship Diagram**
 
 ![Database Entity Relationship Diagram](assets/ERD.png)
