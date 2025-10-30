@@ -230,3 +230,4 @@ public class Location {
 
 ##🔄 Data Flow Sequence Diagram
 
+##🔐 Security Architecture Diagram
