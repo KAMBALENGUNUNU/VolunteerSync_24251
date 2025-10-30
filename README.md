@@ -230,7 +230,7 @@ public class Location {
 ![]()
 
 ##🗃️ Database Entity Relationship Diagram
-![]()
+![Database Entity Relationship Diagram]()
 
 ##🔄 Data Flow Sequence Diagram
 ![]()
