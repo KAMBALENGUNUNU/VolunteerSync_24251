@@ -239,6 +239,7 @@ This diagram provides a comprehensive overview of your VolunteerSync backend's l
 ## 🗃️**Database Entity Relationship Diagram**
 
 ![Database Entity Relationship Diagram](assets/ERD.png)
+
 This ERD details the persistence layer structure and data relationships in your VolunteerSync system. It showcases the normalized database schema with five main entities and their intricate relationships. The Application entity serves as a junction table between Volunteer and Opportunity with a unique constraint preventing duplicate applications. The hierarchical location structure is particularly sophisticated, with Location entities supporting a parent-child relationship that models Rwanda's administrative divisions from Province down to Village. The NGO entity has a one-to-one relationship with Volunteer through the admin field, enforcing that each NGO has exactly one administrator. Data integrity constraints are clearly shown: unique emails for volunteers and NGOs, phone number validation for Rwandan formats, and foreign key relationships ensuring referential integrity. The enumerations (ApplicationStatus, Role, LocationType) provide domain-specific typing and constraint enforcement at the database level. This diagram effectively communicates how your data model supports the business requirements of volunteer management and opportunity tracking.
 
 
