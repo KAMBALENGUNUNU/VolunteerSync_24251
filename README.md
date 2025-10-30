@@ -227,11 +227,16 @@ public class Location {
 }
 ```
 ##🏗️ Technical Architecture
+![]()
 
 ##🗃️ Database Entity Relationship Diagram
+![]()
 
 ##🔄 Data Flow Sequence Diagram
+![]()
 
 ##🔐 Security Architecture Diagram
+![]()
 
 ##📊 Service Dependency Diagram
+![]()
