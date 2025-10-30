@@ -227,10 +227,10 @@ public class Location {
 }
 ```
 ##🏗️ Complete System Architecture Diagram
-![Complete System Architecture Diagram]()
+![Complete System Architecture Diagram](assets/CompleteSystemArchitectureDiagram.png)
 
 ##🗃️ Database Entity Relationship Diagram
-![Database Entity Relationship Diagram](assets/CompleteSystemArchitectureDiagram.png)
+![Database Entity Relationship Diagram]()
 
 ##🔄 Data Flow Sequence Diagram
 ![Data Flow Sequence Diagram](DataFlowSequenceDiagram.png)
