@@ -29,9 +29,12 @@ public class Volunteer {
     @Pattern(regexp = "^\\+?2507\\d{8}$", message = "Phone must be a valid Rwandan mobile like +2507XXXXXXXX")
     private String phone;
 
-    @NotNull @Enumerated(EnumType.STRING)
+    @NotNull 
+    @Enumerated(EnumType.STRING)
     private Role role;
 
-    @NotNull @ManyToOne @JoinColumn(name = "village_id", nullable = false)
-    private Location village; // must be type VILLAGE
+    @NotNull 
+    @ManyToOne 
+    @JoinColumn(name = "village_id", nullable = false)
+    private Location village; 
 }
