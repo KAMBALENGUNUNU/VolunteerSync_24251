@@ -27,5 +27,5 @@ public class NGO {
     @NotNull
     @OneToOne 
     @JoinColumn(name = "admin_id", unique = true, nullable = false)
-    private Volunteer admin; // should have Role.NGO_ADMIN at service layer
+    private Volunteer admin; 
 }
