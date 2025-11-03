@@ -25,5 +25,5 @@ public class Location {
 
     @ManyToOne 
     @JoinColumn(name = "parent_id")
-    private Location parent; // null only for PROVINCE
+    private Location parent; 
 }
