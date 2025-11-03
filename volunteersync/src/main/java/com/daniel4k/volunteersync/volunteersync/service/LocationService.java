@@ -30,8 +30,7 @@ public class LocationService {
     }
 
     public Location getLocation(Long id) {
-        return locationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Location not found"));
+        return locationRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Location not found"));
     }
 
     @Transactional
