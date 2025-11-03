@@ -25,8 +25,7 @@ public class NGOService {
         if (ngoRepository.existsByContactEmail(ngo.getContactEmail()))
             throw new IllegalArgumentException("NGO contact email already exists");
 
-        Volunteer admin = volunteerRepository.findById(ngo.getAdmin().getVolunteerId())
-                .orElseThrow(() -> new IllegalArgumentException("Admin volunteer not found"));
+        Volunteer admin = volunteerRepository.findById(ngo.getAdmin().getVolunteerId()).orElseThrow(() -> new IllegalArgumentException("Admin volunteer not found"));
 
         if (admin.getRole() != Role.NGO_ADMIN)
             throw new IllegalArgumentException("Admin must have role NGO_ADMIN");
@@ -36,8 +35,7 @@ public class NGOService {
     }
 
     public NGO get(Long id) {
-        return ngoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("NGO not found"));
+        return ngoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("NGO not found"));
     }
 
     @Transactional
