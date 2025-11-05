@@ -56,8 +56,7 @@ public class OpportunityService {
 
         // reattach relations
         existing.setNgo(ngoRepository.findById(incoming.getNgo().getNgoId()).orElseThrow(() -> new IllegalArgumentException("NGO not found")));
-        Location village = locationRepository.findById(incoming.getVillage().getLocationId())
-                .orElseThrow(() -> new IllegalArgumentException("Village not found"));
+        Location village = locationRepository.findById(incoming.getVillage().getLocationId()).orElseThrow(() -> new IllegalArgumentException("Village not found"));
         if (village.getType() != LocationType.VILLAGE)
             throw new IllegalArgumentException("Opportunity.village must be VILLAGE");
         existing.setVillage(village);
