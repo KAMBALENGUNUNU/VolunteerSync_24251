@@ -48,8 +48,7 @@ public class NGOService {
         existing.setDescription(incoming.getDescription());
         existing.setContactEmail(incoming.getContactEmail());
 
-        Volunteer admin = volunteerRepository.findById(incoming.getAdmin().getVolunteerId())
-                .orElseThrow(() -> new IllegalArgumentException("Admin volunteer not found"));
+        Volunteer admin = volunteerRepository.findById(incoming.getAdmin().getVolunteerId()).orElseThrow(() -> new IllegalArgumentException("Admin volunteer not found"));
         if (admin.getRole() != Role.NGO_ADMIN)
             throw new IllegalArgumentException("Admin must have role NGO_ADMIN");
         existing.setAdmin(admin);
