@@ -31,16 +31,16 @@ public class VolunteerService {
     }
 
     public Volunteer getVolunteer(Long id) {
-        return volunteerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Volunteer not found"));
+        return volunteerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Volunteer not found"));
     }
 
     @Transactional
     public Volunteer updateVolunteer(Long id, @Valid Volunteer volunteer) {
         Volunteer existing = getVolunteer(id);
-        if (!existing.getEmail().equals(volunteer.getEmail())
-                && volunteerRepository.existsByEmail(volunteer.getEmail())) {
+        if (!existing.getEmail().equals(volunteer.getEmail())&& volunteerRepository.existsByEmail(volunteer.getEmail())) {
+
             throw new IllegalArgumentException("Email already exists");
+            
         }
         existing.setFirstName(volunteer.getFirstName());
         existing.setLastName(volunteer.getLastName());
