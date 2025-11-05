@@ -43,8 +43,7 @@ public class OpportunityService {
     }
 
     public Opportunity get(Long id) {
-        return opportunityRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Opportunity not found"));
+        return opportunityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Opportunity not found"));
     }
 
     @Transactional
