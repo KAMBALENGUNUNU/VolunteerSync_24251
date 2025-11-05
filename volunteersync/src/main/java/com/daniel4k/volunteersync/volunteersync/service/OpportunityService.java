@@ -55,8 +55,7 @@ public class OpportunityService {
         existing.setMaxVolunteers(incoming.getMaxVolunteers());
 
         // reattach relations
-        existing.setNgo(ngoRepository.findById(incoming.getNgo().getNgoId())
-                .orElseThrow(() -> new IllegalArgumentException("NGO not found")));
+        existing.setNgo(ngoRepository.findById(incoming.getNgo().getNgoId()).orElseThrow(() -> new IllegalArgumentException("NGO not found")));
         Location village = locationRepository.findById(incoming.getVillage().getLocationId())
                 .orElseThrow(() -> new IllegalArgumentException("Village not found"));
         if (village.getType() != LocationType.VILLAGE)
