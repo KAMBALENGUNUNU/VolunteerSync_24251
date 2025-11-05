@@ -42,8 +42,7 @@ public class ApplicationService {
     }
 
     public Application get(Long id) {
-        return applicationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Application not found"));
+        return applicationRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Application not found"));
     }
 
     @Transactional
