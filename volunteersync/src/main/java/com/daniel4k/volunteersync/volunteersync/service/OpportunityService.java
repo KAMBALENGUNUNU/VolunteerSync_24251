@@ -22,9 +22,7 @@ public class OpportunityService {
     private final NGORepository ngoRepository;
     private final LocationRepository locationRepository;
 
-    public OpportunityService(OpportunityRepository opportunityRepository,
-            NGORepository ngoRepository,
-            LocationRepository locationRepository) {
+    public OpportunityService(OpportunityRepository opportunityRepository,NGORepository ngoRepository,LocationRepository locationRepository) {
         this.opportunityRepository = opportunityRepository;
         this.ngoRepository = ngoRepository;
         this.locationRepository = locationRepository;
