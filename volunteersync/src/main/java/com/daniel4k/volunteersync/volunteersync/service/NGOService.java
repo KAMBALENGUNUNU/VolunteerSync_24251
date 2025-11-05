@@ -41,8 +41,7 @@ public class NGOService {
     @Transactional
     public NGO update(Long id, @Valid NGO incoming) {
         NGO existing = get(id);
-        if (!existing.getContactEmail().equalsIgnoreCase(incoming.getContactEmail())
-                && ngoRepository.existsByContactEmail(incoming.getContactEmail())) {
+        if (!existing.getContactEmail().equalsIgnoreCase(incoming.getContactEmail())&& ngoRepository.existsByContactEmail(incoming.getContactEmail())) {
             throw new IllegalArgumentException("NGO contact email already exists");
         }
         existing.setName(incoming.getName());
