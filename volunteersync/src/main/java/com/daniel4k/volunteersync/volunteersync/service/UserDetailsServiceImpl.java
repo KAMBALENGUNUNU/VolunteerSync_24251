@@ -27,9 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
 
-        return User.builder()
-                .username(volunteer.getEmail())
-                .password(volunteer.getPassword())
+        return User.builder().username(volunteer.getEmail()).password(volunteer.getPassword())
                 .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + volunteer.getRole().name())))
                 .build();
     }
