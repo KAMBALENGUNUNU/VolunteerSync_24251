@@ -31,8 +31,7 @@ public class OpportunityService {
     @Transactional
     public Opportunity create(@Valid Opportunity o) {
         NGO ngo = ngoRepository.findById(o.getNgo().getNgoId()).orElseThrow(() -> new IllegalArgumentException("NGO not found"));
-        Location village = locationRepository.findById(o.getVillage().getLocationId())
-                .orElseThrow(() -> new IllegalArgumentException("Village not found"));
+        Location village = locationRepository.findById(o.getVillage().getLocationId()) .orElseThrow(() -> new IllegalArgumentException("Village not found"));
         if (village.getType() != LocationType.VILLAGE)
             throw new IllegalArgumentException("Opportunity.village must be of type VILLAGE");
         if (o.getEventDate().isBefore(LocalDate.now()))
