@@ -20,8 +20,8 @@ public class ApplicationController {
 
     @PostMapping("/apply")
     @PreAuthorize("hasAnyRole('VOLUNTEER','NGO_ADMIN')")
-    public ResponseEntity<Application> apply(@RequestParam Long volunteerId, @RequestParam Long opportunityId) {
-        return ResponseEntity.ok(service.apply(volunteerId, opportunityId));
+   public ResponseEntity<Application> apply(@RequestBody ApplicationRequest request) {
+        return ResponseEntity.ok(service.apply(request.getVolunteerId(), request.getOpportunityId()));
     }
 
     @GetMapping("/{id}")

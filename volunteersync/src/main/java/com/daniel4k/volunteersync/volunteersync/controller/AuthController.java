@@ -1,12 +1,17 @@
 package com.daniel4k.volunteersync.volunteersync.controller;
 
+import com.daniel4k.volunteersync.volunteersync.model.Role;
+import com.daniel4k.volunteersync.volunteersync.model.Volunteer;
+import com.daniel4k.volunteersync.volunteersync.repository.VolunteerRepository;
 import com.daniel4k.volunteersync.volunteersync.service.PasswordResetService;
 import com.daniel4k.volunteersync.volunteersync.service.TwoFactorAuthService;
 import com.daniel4k.volunteersync.volunteersync.service.UserDetailsServiceImpl;
+import com.daniel4k.volunteersync.volunteersync.service.VolunteerService;
 import com.daniel4k.volunteersync.volunteersync.util.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,18 +27,65 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final TwoFactorAuthService twoFactorAuthService;
     private final PasswordResetService passwordResetService;
+    private final VolunteerService volunteerService;
+    private final VolunteerRepository volunteerRepository;
 
     public AuthController(AuthenticationManager authenticationManager,
-                         UserDetailsServiceImpl userDetailsService,
-                         JwtUtil jwtUtil,
-                         TwoFactorAuthService twoFactorAuthService,
-                         PasswordResetService passwordResetService) {
+                          UserDetailsServiceImpl userDetailsService,
+                          JwtUtil jwtUtil,
+                          TwoFactorAuthService twoFactorAuthService,
+                          PasswordResetService passwordResetService,
+                          VolunteerService volunteerService,     
+                          VolunteerRepository volunteerRepository 
+                          ) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
         this.twoFactorAuthService = twoFactorAuthService;
         this.passwordResetService = passwordResetService;
+        this.volunteerService = volunteerService;
+        this.volunteerRepository = volunteerRepository;
     }
+
+    // --- FIX B: NEW ENDPOINTS START ---
+
+    // 1. PUBLIC REGISTRATION ENDPOINT
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody Volunteer volunteer) {
+        try {
+            // Force role to VOLUNTEER for public registration for safety
+            volunteer.setRole(Role.VOLUNTEER);
+            
+            // Password encoding is handled inside volunteerService.createVolunteer
+            return ResponseEntity.ok(volunteerService.createVolunteer(volunteer));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // 2. GET CURRENT USER PROFILE
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+        if (authentication == null) {
+            return ResponseEntity.status(401).body("Not Authenticated");
+        }
+        String email = authentication.getName();
+        Volunteer volunteer = volunteerRepository.findByEmail(email); 
+            
+        if (volunteer != null) {
+            // Avoid sending password back!
+            volunteer.setPassword(null); 
+            return ResponseEntity.ok(volunteer);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    // 3. LOGOUT (Stateless)
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        return ResponseEntity.ok(Map.of("message", "Logged out successfully"));
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
