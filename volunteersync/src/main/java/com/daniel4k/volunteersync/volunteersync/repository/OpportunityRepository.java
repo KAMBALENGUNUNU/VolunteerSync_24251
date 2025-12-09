@@ -13,4 +13,12 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
 
     @Query("SELECT o FROM Opportunity o WHERE o.village.locationId = :villageId")
     Page<Opportunity> findByVillageId(@Param("villageId") Long villageId, Pageable pageable);
+
+    @Query("SELECT o FROM Opportunity o WHERE " +
+       "LOWER(o.title) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+       "LOWER(o.description) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+       "LOWER(o.ngo.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+       "LOWER(o.village.name) LIKE LOWER(CONCAT('%', :query, '%'))")
+Page<Opportunity> searchOpportunities(@Param("query") String query, Pageable pageable);
+
 }
