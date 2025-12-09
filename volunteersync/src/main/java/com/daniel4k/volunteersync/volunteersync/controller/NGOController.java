@@ -41,7 +41,12 @@ public class NGOController {
     }
     @GetMapping
 @PreAuthorize("hasAnyRole('VOLUNTEER','NGO_ADMIN')")
-public ResponseEntity<Page<NGO>> getAllNGOs(Pageable pageable) {
+public ResponseEntity<Page<NGO>> getAllNGOs(
+        @RequestParam(required = false) String search,
+        Pageable pageable) {
+    if (search != null && !search.trim().isEmpty()) {
+        return ResponseEntity.ok(ngoService.searchNGOs(search, pageable));
+    }
     return ResponseEntity.ok(ngoService.getAll(pageable));
 }
 

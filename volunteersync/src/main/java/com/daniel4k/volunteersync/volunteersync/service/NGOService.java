@@ -39,6 +39,9 @@ public class NGOService {
     public NGO get(Long id) {
         return ngoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("NGO not found"));
     }
+    public Page<NGO> searchNGOs(String query, Pageable pageable) {
+    return ngoRepository.searchNGOs(query, pageable);
+}
 
     public Page<NGO> getAll(Pageable pageable) {
     return ngoRepository.findAll(pageable);
