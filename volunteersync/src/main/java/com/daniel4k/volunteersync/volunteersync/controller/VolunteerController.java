@@ -18,7 +18,7 @@ public class VolunteerController {
     private VolunteerService volunteerService;
 
     @PostMapping
-    @PreAuthorize("hasRole('NGO_ADMIN')") // Only admins create volunteers
+    @PreAuthorize("hasRole('NGO_ADMIN')")
     public ResponseEntity<Volunteer> createVolunteer(@Valid @RequestBody Volunteer volunteer) {
         return ResponseEntity.ok(volunteerService.createVolunteer(volunteer));
     }
@@ -40,6 +40,17 @@ public class VolunteerController {
     public ResponseEntity<Void> deleteVolunteer(@PathVariable Long id) {
         volunteerService.deleteVolunteer(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAnyRole('VOLUNTEER', 'NGO_ADMIN')")
+    public ResponseEntity<Page<Volunteer>> getAllVolunteers(
+            @RequestParam(required = false) String search,
+            Pageable pageable) {
+        if (search != null && !search.trim().isEmpty()) {
+            return ResponseEntity.ok(volunteerService.searchVolunteers(search, pageable));
+        }
+        return ResponseEntity.ok(volunteerService.getAllVolunteers(pageable));
     }
 
     @GetMapping("/by-village/{villageId}")
