@@ -10,11 +10,14 @@ import com.daniel4k.volunteersync.volunteersync.repository.OpportunityRepository
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OpportunityService {
@@ -54,7 +57,6 @@ public class OpportunityService {
         existing.setEventDate(incoming.getEventDate());
         existing.setMaxVolunteers(incoming.getMaxVolunteers());
 
-        // reattach relations
         existing.setNgo(ngoRepository.findById(incoming.getNgo().getNgoId()).orElseThrow(() -> new IllegalArgumentException("NGO not found")));
         Location village = locationRepository.findById(incoming.getVillage().getLocationId()).orElseThrow(() -> new IllegalArgumentException("Village not found"));
         if (village.getType() != LocationType.VILLAGE)
@@ -70,13 +72,31 @@ public class OpportunityService {
         opportunityRepository.deleteById(id);
     }
 
+    public Page<Opportunity> getAllOpportunities(Pageable pageable) {
+        return opportunityRepository.findAll(pageable);
+    }
+
+    public Page<Opportunity> searchOpportunities(String query, Pageable pageable) {
+        String lowerQuery = query.toLowerCase();
+        List<Opportunity> filtered = opportunityRepository.findAll().stream()
+                .filter(o -> o.getTitle().toLowerCase().contains(lowerQuery) ||
+                           (o.getDescription() != null && o.getDescription().toLowerCase().contains(lowerQuery)) ||
+                           o.getNgo().getName().toLowerCase().contains(lowerQuery) ||
+                           o.getVillage().getName().toLowerCase().contains(lowerQuery))
+                .collect(Collectors.toList());
+        
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), filtered.size());
+        List<Opportunity> pageContent = filtered.subList(start, end);
+        
+        return new PageImpl<>(pageContent, pageable, filtered.size());
+    }
+
     public Page<Opportunity> byNgo(Long ngoId, Pageable pageable) {
-        // return opportunityRepository.findByNgo_NgoId(ngoId, pageable);
         return opportunityRepository.findByNgoId(ngoId, pageable);
     }
 
     public Page<Opportunity> byVillage(Long villageId, Pageable pageable) {
-        // return opportunityRepository.findByVillage_LocationId(villageId, pageable);
         return opportunityRepository.findByVillageId(villageId, pageable);
     }
 }
