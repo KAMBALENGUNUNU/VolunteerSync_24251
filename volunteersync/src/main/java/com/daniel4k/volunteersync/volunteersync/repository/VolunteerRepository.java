@@ -36,4 +36,10 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Long> {
             WHERE province.name = :name
             """)
     List<Volunteer> findByProvinceName(@Param("name") String name);
+    @Query("SELECT v FROM Volunteer v WHERE " +
+       "LOWER(v.firstName) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+       "LOWER(v.lastName) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+       "LOWER(v.email) LIKE LOWER(CONCAT('%', :query, '%'))")
+Page<Volunteer> searchVolunteers(@Param("query") String query, Pageable pageable);
+
 }
