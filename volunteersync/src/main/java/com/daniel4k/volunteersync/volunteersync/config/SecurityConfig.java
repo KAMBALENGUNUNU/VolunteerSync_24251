@@ -30,12 +30,14 @@ public class SecurityConfig {
           .csrf(csrf -> csrf.disable())
           .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
           .authorizeHttpRequests(auth -> auth
-              .requestMatchers("/api/auth/**").permitAll() // Allow auth endpoints without authentication
+              .requestMatchers("/api/auth/**").permitAll() // Allow all auth endpoints (login, 2FA, password reset)
               .requestMatchers("/api/volunteers/**",
                                "/api/ngos/**",
                                "/api/opportunities/**",
                                "/api/applications/**",
-                               "/api/locations/**").authenticated()
+                               "/api/locations/**",
+                               "/api/dashboard/**",
+                               "/api/search/**").authenticated()
               .anyRequest().permitAll()
           )
           .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
