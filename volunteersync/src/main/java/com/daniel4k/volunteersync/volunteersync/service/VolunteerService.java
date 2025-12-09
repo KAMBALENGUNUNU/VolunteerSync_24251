@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class VolunteerService {
     private VolunteerRepository volunteerRepository;
     @Autowired
     private LocationRepository locationRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
 
     @Transactional
     public Volunteer createVolunteer(@Valid Volunteer volunteer) {
@@ -30,6 +32,7 @@ public class VolunteerService {
         if (!locationRepository.existsById(volunteer.getVillage().getLocationId())) {
             throw new IllegalArgumentException("Invalid village ID");
         }
+        volunteer.setPassword(passwordEncoder.encode(volunteer.getPassword()));
         return volunteerRepository.save(volunteer);
     }
 
