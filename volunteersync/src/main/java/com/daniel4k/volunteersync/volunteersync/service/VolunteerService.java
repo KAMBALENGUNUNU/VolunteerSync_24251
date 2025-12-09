@@ -8,9 +8,12 @@ import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.stream.Collectors;
 
 @Service
 public class VolunteerService {
@@ -38,9 +41,7 @@ public class VolunteerService {
     public Volunteer updateVolunteer(Long id, @Valid Volunteer volunteer) {
         Volunteer existing = getVolunteer(id);
         if (!existing.getEmail().equals(volunteer.getEmail())&& volunteerRepository.existsByEmail(volunteer.getEmail())) {
-
             throw new IllegalArgumentException("Email already exists");
-            
         }
         existing.setFirstName(volunteer.getFirstName());
         existing.setLastName(volunteer.getLastName());
@@ -58,6 +59,26 @@ public class VolunteerService {
             throw new EntityNotFoundException("Volunteer not found");
         }
         volunteerRepository.deleteById(id);
+    }
+
+    public Page<Volunteer> getAllVolunteers(Pageable pageable) {
+        return volunteerRepository.findAll(pageable);
+    }
+
+    public Page<Volunteer> searchVolunteers(String query, Pageable pageable) {
+        String lowerQuery = query.toLowerCase();
+        List<Volunteer> filtered = volunteerRepository.findAll().stream()
+                .filter(v -> v.getFirstName().toLowerCase().contains(lowerQuery) ||
+                           v.getLastName().toLowerCase().contains(lowerQuery) ||
+                           v.getEmail().toLowerCase().contains(lowerQuery) ||
+                           (v.getPhone() != null && v.getPhone().contains(query)))
+                .collect(Collectors.toList());
+        
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), filtered.size());
+        List<Volunteer> pageContent = filtered.subList(start, end);
+        
+        return new PageImpl<>(pageContent, pageable, filtered.size());
     }
 
     public Page<Volunteer> getVolunteersByVillage(Long villageId, Pageable pageable) {
