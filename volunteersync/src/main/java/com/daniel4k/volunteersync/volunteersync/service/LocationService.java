@@ -9,10 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class LocationService {
     @Autowired
     private LocationRepository locationRepository;
+
+    // --- NEW METHODS FOR CASCADING DROPDOWNS ---
+    public List<Location> getProvinces() {
+        return locationRepository.findByType(LocationType.PROVINCE);
+    }
+
+    public List<Location> getChildren(Long parentId) {
+        return locationRepository.findByParent_LocationId(parentId);
+    }
+    // -------------------------------------------
 
     @Transactional
     public Location createLocation(@Valid Location location) {
