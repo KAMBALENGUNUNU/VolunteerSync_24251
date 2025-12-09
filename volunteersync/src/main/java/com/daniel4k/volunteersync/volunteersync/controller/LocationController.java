@@ -6,30 +6,54 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
-@RestController 
+@RestController
 @RequestMapping("/api/locations")
 public class LocationController {
     private final LocationService service;
-    public LocationController(LocationService service){ this.service = service; }
 
-    @PostMapping 
+    public LocationController(LocationService service) {
+        this.service = service;
+    }
+
+    @GetMapping("/provinces")
+
+   // @PreAuthorize("hasAnyRole('VOLUNTEER','NGO_ADMIN') or isAnonymous()") 
+    public ResponseEntity<List<Location>> getProvinces() {
+        return ResponseEntity.ok(service.getProvinces());
+    }
+
+    @GetMapping("/children/{parentId}")
+    @PreAuthorize("hasAnyRole('VOLUNTEER','NGO_ADMIN') or isAnonymous()")
+    public ResponseEntity<List<Location>> getChildren(@PathVariable Long parentId) {
+        return ResponseEntity.ok(service.getChildren(parentId));
+    }
+
+    // ---------------------------------------------
+
+    @PostMapping
     @PreAuthorize("hasRole('NGO_ADMIN')")
-    public ResponseEntity<Location> create(@Valid @RequestBody Location l){ return ResponseEntity.ok(service.createLocation(l)); }
+    public ResponseEntity<Location> create(@Valid @RequestBody Location l) {
+        return ResponseEntity.ok(service.createLocation(l));
+    }
 
-    @GetMapping("/{id}") 
+    @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('VOLUNTEER','NGO_ADMIN')")
-    public ResponseEntity<Location> get(@PathVariable Long id){ return ResponseEntity.ok(service.getLocation(id)); }
+    public ResponseEntity<Location> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getLocation(id));
+    }
 
-    @PutMapping("/{id}") 
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('NGO_ADMIN')")
-    public ResponseEntity<Location> update(@PathVariable Long id, @Valid @RequestBody Location l){
+    public ResponseEntity<Location> update(@PathVariable Long id, @Valid @RequestBody Location l) {
         return ResponseEntity.ok(service.updateLocation(id, l));
     }
 
-    @DeleteMapping("/{id}") 
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('NGO_ADMIN')")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-        service.deleteLocation(id); return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.deleteLocation(id);
+        return ResponseEntity.noContent().build();
     }
 }
