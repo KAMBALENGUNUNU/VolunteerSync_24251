@@ -1,4 +1,3 @@
-// Package: com.daniel4k.volunteersync.volunteersync.config
 package com.daniel4k.volunteersync.volunteersync.config;
 
 import org.springframework.beans.factory.annotation.Value;
