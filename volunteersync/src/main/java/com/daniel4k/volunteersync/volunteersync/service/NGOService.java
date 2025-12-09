@@ -9,6 +9,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class NGOService {
@@ -38,6 +40,9 @@ public class NGOService {
         return ngoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("NGO not found"));
     }
 
+    public Page<NGO> getAll(Pageable pageable) {
+    return ngoRepository.findAll(pageable);
+}
     @Transactional
     public NGO update(Long id, @Valid NGO incoming) {
         NGO existing = get(id);
