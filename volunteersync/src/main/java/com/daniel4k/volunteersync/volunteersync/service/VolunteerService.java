@@ -49,7 +49,9 @@ public class VolunteerService {
         existing.setFirstName(volunteer.getFirstName());
         existing.setLastName(volunteer.getLastName());
         existing.setEmail(volunteer.getEmail());
-        existing.setPassword(volunteer.getPassword());
+        if (volunteer.getPassword() != null && !volunteer.getPassword().isEmpty()) {
+            existing.setPassword(passwordEncoder.encode(volunteer.getPassword()));
+        }        
         existing.setPhone(volunteer.getPhone());
         existing.setRole(volunteer.getRole());
         existing.setVillage(volunteer.getVillage());
