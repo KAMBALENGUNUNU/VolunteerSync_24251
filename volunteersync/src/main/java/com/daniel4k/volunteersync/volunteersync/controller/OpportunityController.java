@@ -39,6 +39,17 @@ public class OpportunityController {
         service.delete(id); return ResponseEntity.noContent().build();
     }
 
+    @GetMapping
+    @PreAuthorize("hasAnyRole('VOLUNTEER','NGO_ADMIN')")
+    public ResponseEntity<Page<Opportunity>> getAll(
+            @RequestParam(required = false) String search,
+            Pageable pageable) {
+        if (search != null && !search.trim().isEmpty()) {
+            return ResponseEntity.ok(service.searchOpportunities(search, pageable));
+        }
+        return ResponseEntity.ok(service.getAllOpportunities(pageable));
+    }
+
     @GetMapping("/by-ngo/{ngoId}") 
     @PreAuthorize("hasAnyRole('VOLUNTEER','NGO_ADMIN')")
     public ResponseEntity<Page<Opportunity>> byNgo(@PathVariable Long ngoId, Pageable pageable){
