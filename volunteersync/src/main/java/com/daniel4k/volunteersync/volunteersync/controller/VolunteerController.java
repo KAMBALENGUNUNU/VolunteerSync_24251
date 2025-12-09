@@ -43,7 +43,7 @@ public class VolunteerController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('VOLUNTEER', 'NGO_ADMIN')")
+    @PreAuthorize("hasAnyRole('NGO_ADMIN')")
     public ResponseEntity<Page<Volunteer>> getAllVolunteers(
             @RequestParam(required = false) String search,
             Pageable pageable) {
