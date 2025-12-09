@@ -31,6 +31,7 @@ public class SecurityConfig {
           .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
           .authorizeHttpRequests(auth -> auth
               .requestMatchers("/api/auth/**").permitAll() // Allow all auth endpoints (login, 2FA, password reset)
+              .requestMatchers("/api/locations/provinces", "/api/locations/children/**").permitAll() // Allow public access to location endpoints needed for registration
               .requestMatchers("/api/volunteers/**",
                                "/api/ngos/**",
                                "/api/opportunities/**",
