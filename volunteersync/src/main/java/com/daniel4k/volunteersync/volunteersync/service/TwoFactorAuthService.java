@@ -33,8 +33,11 @@ public class TwoFactorAuthService {
         }
 
         // Delete old unverified codes
-        twoFactorAuthRepository.findByVolunteerAndVerifiedFalse(volunteer)
-                .ifPresent(twoFactorAuthRepository::delete);
+        twoFactorAuthRepository.findByVolunteer(volunteer)
+                .ifPresent(auth -> {
+                    twoFactorAuthRepository.delete(auth);
+                    twoFactorAuthRepository.flush(); // <--- CRITICAL FIX: Forces DB to delete NOW
+                });
 
         // Generate 6-digit code
         String code = String.format("%06d", new Random().nextInt(999999));

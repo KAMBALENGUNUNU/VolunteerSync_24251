@@ -113,6 +113,37 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("NGO Admin already exists");
         }
 
+               // Create NGO_ADMIN volunteer
+        if (volunteerRepository.findByEmail("iradsham@gmail.com") == null) {
+            Volunteer admin = new Volunteer();
+            admin.setFirstName("irad");
+            admin.setLastName("sham");
+            admin.setEmail("iradsham@gmail.com");
+            admin.setPassword(passwordEncoder.encode("12345678"));
+            admin.setPhone("+250788123456");
+            admin.setRole(Role.NGO_ADMIN);
+            admin.setVillage(village);
+            volunteerRepository.save(admin);
+            System.out.println("Created NGO Admin: iradsham@gmail.com / 12345678");
+        } else {
+            System.out.println("NGO Admin already exists");
+        }
+
+                if (volunteerRepository.findByEmail("kambalengununudaniel@gmail.com") == null) {
+            Volunteer admin = new Volunteer();
+            admin.setFirstName("kambale");
+            admin.setLastName("ngununudaniel");
+            admin.setEmail("kambalengununudaniel@gmail.com");
+            admin.setPassword(passwordEncoder.encode("12345678"));
+            admin.setPhone("+250788123456");
+            admin.setRole(Role.NGO_ADMIN);
+            admin.setVillage(village);
+            volunteerRepository.save(admin);
+            System.out.println("Created NGO Admin: kambalengununudaniel@gmail.com / 12345678");
+        } else {
+            System.out.println("NGO Admin already exists");
+        }
+
         // Create regular VOLUNTEER
         if (volunteerRepository.findByEmail("volunteer@test.com") == null) {
             Volunteer volunteer = new Volunteer();
@@ -125,6 +156,20 @@ public class DataInitializer implements CommandLineRunner {
             volunteer.setVillage(village);
             volunteerRepository.save(volunteer);
             System.out.println("Created Volunteer: volunteer@test.com / volunteer123");
+        } else {
+            System.out.println("Volunteer already exists");
+        }
+                if (volunteerRepository.findByEmail("bestimberculose@gmail.com") == null) {
+            Volunteer volunteer = new Volunteer();
+            volunteer.setFirstName("bestim");
+            volunteer.setLastName("bestim");
+            volunteer.setEmail("bestimberculose@gmail.com");
+            volunteer.setPassword(passwordEncoder.encode("bestim123"));
+            volunteer.setPhone("+250788654321");
+            volunteer.setRole(Role.VOLUNTEER);
+            volunteer.setVillage(village);
+            volunteerRepository.save(volunteer);
+            System.out.println("Created Volunteer: bestimberculose@gmail.com / bestim123");
         } else {
             System.out.println("Volunteer already exists");
         }

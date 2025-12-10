@@ -11,8 +11,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface TwoFactorAuthRepository extends JpaRepository<TwoFactorAuth, Long> {
+    Optional<TwoFactorAuth> findByVolunteer(Volunteer volunteer);
+
     Optional<TwoFactorAuth> findByVolunteerAndVerifiedFalse(Volunteer volunteer);
-    
+
     @Modifying
     @Query("DELETE FROM TwoFactorAuth t WHERE t.expiryDate < :now")
     void deleteExpiredCodes(@Param("now") LocalDateTime now);
