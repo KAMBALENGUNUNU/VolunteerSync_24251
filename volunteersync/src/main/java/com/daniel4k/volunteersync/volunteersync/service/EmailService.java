@@ -22,12 +22,12 @@ public class EmailService {
         message.setSubject("Password Reset Request - VolunteerSync");
         message.setText("Hello,\n\n" +
                 "You requested to reset your password. Click the link below to reset it:\n\n" +
-                "http://localhost:3000/reset-password?token=" + resetToken + "\n\n" +
+                "http://localhost:5173/reset-password?token=" + resetToken + "\n\n" +
                 "This link will expire in 1 hour.\n\n" +
                 "If you didn't request this, please ignore this email.\n\n" +
                 "Best regards,\n" +
                 "VolunteerSync Team");
-        
+
         mailSender.send(message);
     }
 
@@ -43,7 +43,7 @@ public class EmailService {
                 "If you didn't request this, please contact support immediately.\n\n" +
                 "Best regards,\n" +
                 "VolunteerSync Team");
-        
+
         mailSender.send(message);
     }
 
@@ -57,7 +57,7 @@ public class EmailService {
                 "You can now log in and start exploring volunteer opportunities.\n\n" +
                 "Best regards,\n" +
                 "VolunteerSync Team");
-        
+
         mailSender.send(message);
     }
 }
